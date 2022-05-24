@@ -7,4 +7,9 @@ class Board
 
     @board_arr = Array.new(width) { Array.new(height) }
   end
+
+  # Returns the value of the token at the given position.
+  def get_token_at(row, column)
+    @board_arr[column][row]
+  end
 end
