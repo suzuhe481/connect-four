@@ -1,6 +1,8 @@
 class Game
+  attr_accessor :board
+
   def initialize
-    board = Board.new
+    @board = Board.new
   end
 
   def start
