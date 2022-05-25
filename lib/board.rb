@@ -19,76 +19,68 @@ class Board
     @board_arr[col - 1].append(token)
   end
 
-  # Checks for matching tokens above given token.
-  def match_above(row, col)
+  # Returns the number of vertically matching tokens at a given position.
+  def match_vertical(row, col)
+    # Counts matching tokens above given position.
     curr_token = get_token_at(row, col)
     initial_token = curr_token
     curr_row = row
     curr_col = col
+    in_a_row_up = -1
 
-    in_a_row = -1
     while curr_token == initial_token
-      in_a_row += 1
+      in_a_row_up += 1
       curr_row += 1
 
       curr_token = get_token_at(curr_row, curr_col)
     end
 
-    in_a_row
-  end
-
-  # Checks for matching tokens below given token.
-  def match_below(row, col)
+    # Counts matching tokens below given position.
     curr_token = get_token_at(row, col)
-    initial_token = curr_token
     curr_row = row
     curr_col = col
+    in_a_row_down = -1
 
-    in_a_row = -1
     while curr_token == initial_token
-      in_a_row += 1
+      in_a_row_down += 1
       curr_row -= 1
 
       curr_token = get_token_at(curr_row, curr_col)
     end
 
-    in_a_row
+    in_a_row_up + in_a_row_down + 1
   end
 
-  # Checks for matching tokens left of given token.
-  def match_left(row, col)
+  # Returns the number of horizontally matching tokens at a given position.
+  def match_horizontally(row, col)
+    # Counts matching tokens to the left of given position.
     curr_token = get_token_at(row, col)
     initial_token = curr_token
     curr_row = row
     curr_col = col
+    in_a_row_left = -1
 
-    in_a_row = -1
     while curr_token == initial_token
-      in_a_row += 1
+      in_a_row_left += 1
       curr_col -= 1
 
       curr_token = get_token_at(curr_row, curr_col)
     end
 
-    in_a_row
-  end
-
-  # Checks for matching tokens right of given token.
-  def match_right(row, col)
+    # Counts matching tokens to the right of given position.
     curr_token = get_token_at(row, col)
-    initial_token = curr_token
     curr_row = row
     curr_col = col
+    in_a_row_right = -1
 
-    in_a_row = -1
     while curr_token == initial_token
-      in_a_row += 1
+      in_a_row_right += 1
       curr_col += 1
 
       curr_token = get_token_at(curr_row, curr_col)
     end
 
-    in_a_row
+    in_a_row_left + in_a_row_right + 1
   end
 
   # Prints the current game board.
