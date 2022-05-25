@@ -19,7 +19,7 @@ class Board
     @board_arr[col - 1].append(token)
   end
 
-  # Checks for matching tokens above given token
+  # Checks for matching tokens above given token.
   def match_above(row, col)
     curr_token = get_token_at(row, col)
     initial_token = curr_token
@@ -27,11 +27,32 @@ class Board
     curr_col = col
     puts "initial token is #{initial_token} at row: #{row} and col: #{col}"
 
-    in_a_row = 0
+    in_a_row = -1
     while curr_token == initial_token
       puts "moved row"
       in_a_row += 1
       curr_row += 1
+
+      curr_token = get_token_at(curr_row, curr_col)
+      puts "new token is #{curr_token} at row #{curr_row} and col #{curr_col}"
+    end
+
+    in_a_row
+  end
+
+  # Checks for matching tokens below given token.
+  def match_below(row, col)
+    curr_token = get_token_at(row, col)
+    initial_token = curr_token
+    curr_row = row
+    curr_col = col
+    puts "initial token is #{initial_token} at row: #{row} and col: #{col}"
+
+    in_a_row = -1
+    while curr_token == initial_token
+      puts "moved row"
+      in_a_row += 1
+      curr_row -= 1
 
       curr_token = get_token_at(curr_row, curr_col)
       puts "new token is #{curr_token} at row #{curr_row} and col #{curr_col}"
