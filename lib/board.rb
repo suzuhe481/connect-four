@@ -11,6 +11,8 @@ class Board
 
   # Returns the value of the token at the given position.
   def get_token_at(row, col)
+    return nil if row > 6 || col > 7
+
     @board_arr[col - 1][row - 1]
   end
 
@@ -20,9 +22,12 @@ class Board
   end
 
   # Returns the number of vertically matching tokens at a given position.
-  def match_vertical(row, col)
+  def match_vertically(row, col)
     # Counts matching tokens above given position.
     curr_token = get_token_at(row, col)
+
+    return 0 if curr_token == " "
+
     initial_token = curr_token
     curr_row = row
     curr_col = col
@@ -55,6 +60,9 @@ class Board
   def match_horizontally(row, col)
     # Counts matching tokens to the left of given position.
     curr_token = get_token_at(row, col)
+
+    return 0 if curr_token == " "
+
     initial_token = curr_token
     curr_row = row
     curr_col = col
@@ -81,6 +89,82 @@ class Board
     end
 
     in_a_row_left + in_a_row_right + 1
+  end
+
+  # Returns the number of diagonally matching tokens from a Southwest to Northeast direction at a given position.
+  def match_diagonally_SW_to_NE(row, col)
+    # Counts matching tokens to the Southwest of given position.
+    curr_token = get_token_at(row, col)
+
+    return 0 if curr_token == " " 
+
+    initial_token = curr_token
+    curr_row = row
+    curr_col = col
+    in_a_row_SW = -1
+
+    while curr_token == initial_token
+      in_a_row_SW += 1
+      curr_row -= 1
+      curr_col -= 1
+
+      curr_token = get_token_at(curr_row, curr_col)
+    end
+
+    
+    # Counts matching tokens to the Northeast of given position.
+    curr_token = get_token_at(row, col)
+    curr_row = row
+    curr_col = col
+    in_a_row_NE = -1
+
+    while curr_token == initial_token
+      in_a_row_NE += 1
+      curr_row += 1
+      curr_col += 1
+
+      curr_token = get_token_at(curr_row, curr_col)
+    end
+    
+    in_a_row_SW + in_a_row_NE + 1
+  end
+
+  # Returns the number of diagonally matching tokens from a Northwest to Southeast direction at a given position.
+  def match_diagonally_NW_to_SE(row, col)
+    # Counts matching tokens to the Northwest of given position.
+    curr_token = get_token_at(row, col)
+
+    return 0 if curr_token == " " 
+
+    initial_token = curr_token
+    curr_row = row
+    curr_col = col
+    in_a_row_NW = -1
+
+    while curr_token == initial_token
+      in_a_row_NW += 1
+      curr_row += 1
+      curr_col -= 1
+
+      curr_token = get_token_at(curr_row, curr_col)
+    end
+
+    
+    # Counts matching tokens to the Southeast of given position.
+    curr_token = get_token_at(row, col)
+    curr_row = row
+    curr_col = col
+    in_a_row_SE = -1
+
+    while curr_token == initial_token
+      in_a_row_SE += 1
+      curr_row -= 1
+      curr_col += 1
+
+      curr_token = get_token_at(curr_row, curr_col)
+    end
+    
+    in_a_row_NW + in_a_row_SE + 1
   end
 
   # Prints the current game board.
