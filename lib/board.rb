@@ -21,6 +21,19 @@ class Board
     @board_arr[col - 1].append(token)
   end
 
+  # Checks if a token is part of a four in a row.
+  def check_win(row, col)
+    if match_vertically(row, col) >= 4 ||
+       match_horizontally(row, col) >= 4 ||
+       match_diagonally_SW_to_NE(row, col) >= 4 ||
+       match_diagonally_NW_to_SE(row, col) >= 4
+
+      return true
+    end
+
+    false
+  end
+
   # Returns the number of vertically matching tokens at a given position.
   def match_vertically(row, col)
     # Counts matching tokens above given position.
