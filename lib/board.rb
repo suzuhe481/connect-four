@@ -34,6 +34,26 @@ class Board
     false
   end
 
+  # Prints the current game board.
+  def print_board
+    rotated_board = @board_arr
+
+    rotated_board.each do |col|
+      until col.count == @max_height
+        col.append(" ")
+      end
+    end
+
+    rotated_board = rotated_board.map(&:reverse).transpose
+
+    rotated_board.each do |row|
+      p row
+    end
+    puts ""
+  end
+
+  private
+
   # Returns the number of vertically matching tokens at a given position.
   def match_vertically(row, col)
     # Counts matching tokens above given position.
@@ -178,23 +198,5 @@ class Board
     end
     
     in_a_row_NW + in_a_row_SE + 1
-  end
-
-  # Prints the current game board.
-  def print_board
-    rotated_board = @board_arr
-
-    rotated_board.each do |col|
-      until col.count == @max_height
-        col.append(" ")
-      end
-    end
-
-    rotated_board = rotated_board.map(&:reverse).transpose
-
-    rotated_board.each do |row|
-      p row
-    end
-    puts ""
   end
 end
