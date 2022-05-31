@@ -36,9 +36,7 @@ class Board
 
   # Checks if a column is full and returns true if full.
   def column_full?(col)
-    col = col -= 1
-
-    col_height = board_arr[col].count { |token| token != " " }
+    col_height = board_arr[col - 1].count { |token| token != " " }
 
     return true if col_height == 6
 
