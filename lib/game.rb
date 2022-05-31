@@ -1,11 +1,12 @@
 class Game
-  attr_accessor :board, :curr_player, :curr_token, :curr_round
+  attr_accessor :board, :curr_player, :curr_token, :curr_round, :max_rounds
 
   def initialize
     @board = Board.new
     @curr_player = "Player 1"
     @curr_token = "⛉"
     @curr_round = 1
+    @max_rounds = 42
   end
 
   # Prints out the game's introductiona and instructions.
@@ -18,27 +19,14 @@ class Game
     puts "Player 1 will go first."
     puts
 
-    # @board.print_board
-
-    # @board.drop_token(4, "X")
-    # @board.drop_token(3, "O")
-
-    # @board.print_board
-
-
     rounds_start
   end
 
   # Starts the game's rounds.
   def rounds_start
-    puts "rounds started"
     col_dropped = ""
 
-    
-    # @board.drop_token(4, @curr_token)
-    # @board.drop_token(4, @curr_token)
-
-    until curr_round > 42
+    until curr_round > @max_rounds
       puts "Round #{curr_round}"
       @board.print_board
 
@@ -51,8 +39,6 @@ class Game
         puts "Enter a valid column position."
       end
 
-      # puts "last play is #{col_dropped}"
-
       row_dropped = @board.drop_token(col_dropped, @curr_token)
       if @board.check_win?(row_dropped, col_dropped)
         @board.print_board
@@ -62,10 +48,9 @@ class Game
       switch_player
 
       @board.print_board
-
+      puts
     end
 
-    puts "End of game."
     @board.print_board
   end
 
@@ -74,7 +59,6 @@ class Game
     result = false
 
     if col_play.to_s =~ /^[1-7]$/
-      # puts "Between 1-7"
       result = true
     else
       return false
