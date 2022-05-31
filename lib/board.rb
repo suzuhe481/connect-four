@@ -10,6 +10,7 @@ class Board
   end
 
   # Returns the value of the token at the given position.
+  # Returns nil if given position is out of bounds.
   def get_token_at(row, col)
     return nil if row > 6 || row < 1 ||
                   col > 7 || col < 1
@@ -17,14 +18,15 @@ class Board
     @board_arr[col - 1][row - 1]
   end
 
-  # Drops a token at a given column and returns the row position of token dropped.
+  # Drops a token at a given column.
+  # Returns the row position of where the dropped token landed.
   def drop_token(col, token)
     @board_arr[col - 1].append(token)
 
     @board_arr[col - 1].count
   end
 
-  # Checks if a token is part of a four in a row.
+  # Returns true if token in a given position is part of a four in a row.
   def check_win?(row, col)
     if match_vertically(row, col) >= 4 ||
        match_horizontally(row, col) >= 4 ||
@@ -37,41 +39,40 @@ class Board
     false
   end
 
-  # Checks if a column is full and returns true if full.
+  # Returns true if a given column is full.
   def column_full?(col)
     col_height = board_arr[col - 1].count { |token| token != " " }
 
     return true if col_height == 6
 
     return false
-
-    
   end
 
   # Prints the current game board.
   def print_board
     rotated_board = Marshal.load(Marshal.dump(@board_arr))
 
+    # Adds nil for empty spaces in the board array.
     rotated_board.each do |col|
-      until col.count == @max_height
-        col.append(" ")
-      end
+      col.append(nil) until col.count == @max_height
     end
 
+    # Rotates board.
     rotated_board = rotated_board.map(&:reverse).transpose
 
-    col_nums = 1..7
+    # Prints the top level column numbers.
     print "    "
-    col_nums.each do |num|
+    (1..7).each do |num|
       print " #{num}"
     end
     puts
 
+    # Prints a nicely formatted board.
     rotated_board.each do |row|
       print "    |"
       
       row.each do |token|
-        if token == " "
+        if token.nil?
           print "_"
         else
           print token.to_s
