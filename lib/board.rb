@@ -4,7 +4,7 @@ class Board
   def initialize(width = 7, height = 0)
     @width = width
     @height = height
-    @max_height = 7
+    @max_height = 6
 
     @board_arr = Array.new(width) { Array.new(height) }
   end
@@ -22,7 +22,7 @@ class Board
   end
 
   # Checks if a token is part of a four in a row.
-  def check_win(row, col)
+  def check_win?(row, col)
     if match_vertically(row, col) >= 4 ||
        match_horizontally(row, col) >= 4 ||
        match_diagonally_SW_to_NE(row, col) >= 4 ||
@@ -32,6 +32,19 @@ class Board
     end
 
     false
+  end
+
+  # Checks if a column is full and returns true if full.
+  def column_full?(col)
+    col = col -= 1
+
+    col_height = board_arr[col].count { |token| token != " " }
+
+    return true if col_height == 6
+
+    return false
+
+    
   end
 
   # Prints the current game board.
