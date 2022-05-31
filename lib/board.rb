@@ -46,10 +46,26 @@ class Board
 
     rotated_board = rotated_board.map(&:reverse).transpose
 
-    rotated_board.each do |row|
-      p row
+    col_nums = 1..7
+    print "    "
+    col_nums.each do |num|
+      print " #{num}"
     end
-    puts ""
+    puts
+
+    rotated_board.each do |row|
+      print "    |"
+      
+      row.each do |token|
+        if token == " "
+          print "_"
+        else
+          print token.to_s
+        end
+        print "|"
+      end
+      puts
+    end
   end
 
   private
