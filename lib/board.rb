@@ -11,7 +11,8 @@ class Board
 
   # Returns the value of the token at the given position.
   def get_token_at(row, col)
-    return nil if row > 6 || col > 7
+    return nil if row > 6 || row < 1 ||
+                  col > 7 || col < 1
 
     @board_arr[col - 1][row - 1]
   end
@@ -25,7 +26,6 @@ class Board
 
   # Checks if a token is part of a four in a row.
   def check_win?(row, col)
-    puts "check win"
     if match_vertically(row, col) >= 4 ||
        match_horizontally(row, col) >= 4 ||
        match_diagonally_SW_to_NE(row, col) >= 4 ||
@@ -88,8 +88,8 @@ class Board
   def match_vertically(row, col)
     # Counts matching tokens above given position.
     curr_token = get_token_at(row, col)
-
-    return 0 if curr_token == " "
+    
+    return 0 if curr_token.nil?
 
     initial_token = curr_token
     curr_row = row
@@ -124,7 +124,7 @@ class Board
     # Counts matching tokens to the left of given position.
     curr_token = get_token_at(row, col)
 
-    return 0 if curr_token == " "
+    return 0 if curr_token.nil?
 
     initial_token = curr_token
     curr_row = row
@@ -159,7 +159,7 @@ class Board
     # Counts matching tokens to the Southwest of given position.
     curr_token = get_token_at(row, col)
 
-    return 0 if curr_token == " " 
+    return 0 if curr_token.nil?
 
     initial_token = curr_token
     curr_row = row
@@ -197,7 +197,7 @@ class Board
     # Counts matching tokens to the Northwest of given position.
     curr_token = get_token_at(row, col)
 
-    return 0 if curr_token == " " 
+    return 0 if curr_token.nil?
 
     initial_token = curr_token
     curr_row = row
