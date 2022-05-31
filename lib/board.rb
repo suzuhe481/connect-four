@@ -16,13 +16,16 @@ class Board
     @board_arr[col - 1][row - 1]
   end
 
-  # Drops a token at a given column.
+  # Drops a token at a given column and returns the row position of token dropped.
   def drop_token(col, token)
     @board_arr[col - 1].append(token)
+
+    @board_arr[col - 1].count
   end
 
   # Checks if a token is part of a four in a row.
   def check_win?(row, col)
+    puts "check win"
     if match_vertically(row, col) >= 4 ||
        match_horizontally(row, col) >= 4 ||
        match_diagonally_SW_to_NE(row, col) >= 4 ||
@@ -47,7 +50,7 @@ class Board
 
   # Prints the current game board.
   def print_board
-    rotated_board = @board_arr
+    rotated_board = Marshal.load(Marshal.dump(@board_arr))
 
     rotated_board.each do |col|
       until col.count == @max_height
