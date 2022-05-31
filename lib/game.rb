@@ -9,7 +9,7 @@ class Game
     @max_rounds = 42
   end
 
-  # Prints out the game's introductiona and instructions.
+  # Prints out the game's introductions and instructions.
   def start
     puts "Welcome to Connect Four."
     puts "The goal of this game is to get 4 of your tokens in row, either horizontally, vertically, or diagonally."
@@ -37,21 +37,21 @@ class Game
         break if validate_play(col_dropped)
 
         puts "Enter a valid column position."
+
+        @board.print_board
       end
 
       row_dropped = @board.drop_token(col_dropped, @curr_token)
-      if @board.check_win?(row_dropped, col_dropped)
-        @board.print_board
-        puts "#{curr_player} WINS!"
-        exit
-      end
-      switch_player
 
-      @board.print_board
+      if @board.check_win?(row_dropped, col_dropped)
+        win_message(curr_player)
+      end
+
+      switch_player
       puts
     end
 
-    @board.print_board
+    tie_message
   end
 
   # Validates a player's column choice.
@@ -83,5 +83,19 @@ class Game
     end
 
     @curr_round += 1
+  end
+
+  # Displays a win message for the winning player.
+  def win_message(curr_player)
+    board.print_board
+    puts "#{curr_player} WINS!"
+    exit
+  end
+
+  def tie_message
+    board.print_board
+    puts "It's a tie."
+    puts "No one wins."
+    exit
   end
 end
